@@ -1,35 +1,36 @@
 plugins {
-    application
-    base
+    java
 }
 
-application {
-    mainClassName = "Percolation"
-}
-
-base {
-    archivesBaseName = "algs"
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-tasks {
-    "zip"(Zip::class) {
-        baseName = "percolation"
-        dependsOn("build")
-        from("src/main/java")
-        include("*")
+subprojects {
+    apply {
+        plugin("java")
     }
-}
 
-dependencies {
-    compile(files("lib/algs4.jar"))
-    testCompile("junit:junit:4.12")
-}
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 
-repositories {
-    jcenter()
+    base {
+        archivesBaseName = project.name.toLowerCase()
+    }
+
+    dependencies {
+        compile(files("../lib/algs4.jar"))
+        testCompile("junit:junit:4.12")
+    }
+
+    tasks {
+        "zip"(type = Zip::class) {
+            baseName = project.name.toLowerCase()
+            dependsOn("build") // todo: figure out why it's not working
+            from("src/main/java")
+            include("*")
+        }
+    }
+
+    repositories {
+        jcenter()
+    }
 }
