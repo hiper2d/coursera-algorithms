@@ -4,5 +4,3 @@ build/
 gradle/
 out/
 *.iml
-gradlew
-gradlew.bat

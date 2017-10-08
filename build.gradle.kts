@@ -1,6 +1,6 @@
 plugins {
-    base
     application
+    base
 }
 
 application {
@@ -18,6 +18,7 @@ java {
 
 dependencies {
     compile(files("lib/algs4.jar"))
+    testCompile("junit:junit:4.12")
 }
 
 repositories {

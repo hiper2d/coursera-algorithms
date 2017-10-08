@@ -3,6 +3,7 @@ import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
 
+    private static final double CONSTANT = 1.96;
     private final double[] results;
     private final int t;
 
@@ -36,7 +37,7 @@ public class PercolationStats {
     }
 
     public double confidenceLo() {
-        return mean() - 1.96 * stddev() / Math.sqrt(t);
+        return mean() - CONSTANT * stddev() / Math.sqrt(t);
     }
 
     public double confidenceHi() {
