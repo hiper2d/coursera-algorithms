@@ -9,7 +9,9 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class PercolationTest {
 
@@ -27,10 +29,19 @@ public class PercolationTest {
     }
 
     @Test
-    public void testInput4Percolation() throws IOException, URISyntaxException {
+    public void testInput4() throws IOException, URISyntaxException {
         initForInputFile("samples/input4.txt");
         runPercolation();
         assertThat(percolation.numberOfOpenSites(), is(8));
+        assertTrue(percolation.percolates());
+    }
+
+    @Test
+    public void testInput6Percolation() throws IOException, URISyntaxException {
+        initForInputFile("samples/input6.txt");
+        runPercolation();
+        assertThat(percolation.numberOfOpenSites(), is(18));
+        assertTrue(percolation.isOpen(4, 4));
         assertThat(percolation.percolates(), is(true));
     }
 
@@ -40,6 +51,15 @@ public class PercolationTest {
         runPercolation();
         assertThat(percolation.numberOfOpenSites(), is(55));
         assertThat(percolation.percolates(), is(false));
+    }
+
+    @Test
+    public void testInput20() throws IOException, URISyntaxException {
+        initForInputFile("samples/input20.txt");
+        runPercolation();
+        assertThat(percolation.numberOfOpenSites(), is(250));
+        assertTrue(percolation.percolates());
+        assertFalse(percolation.isFull(18, 1));
     }
 
     @Test

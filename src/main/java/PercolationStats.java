@@ -17,14 +17,14 @@ public class PercolationStats {
             int[] randoms = StdRandom.permutation(n * n);
             int randomIndex = 0;
 
-            while (!p.percolates() && randomIndex < n * n) {
+            while (!p.percolates()) {
                 int r = randoms[randomIndex++];
                 int row = r / n + 1;
                 int col = r % n + 1;
                 p.open(row, col);
             }
 
-            results[time] = randomIndex / n * n;
+            results[time] = (double) randomIndex / (n * n);
         }
     }
 
@@ -41,7 +41,7 @@ public class PercolationStats {
     }
 
     public double confidenceHi() {
-        return mean() + 1.96 * stddev() / Math.sqrt(t);
+        return mean() + CONSTANT * stddev() / Math.sqrt(t);
     }
 
     public static void main(String[] args) {

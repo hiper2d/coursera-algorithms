@@ -4,24 +4,21 @@ public class Percolation {
 
     private final int size;
     private final int top;
-    private final int bottom;
 
     private final WeightedQuickUnionUF uf;
     private final boolean[] opens;
     private int openCount = 0;
 
     public Percolation(int n) {
-        if (n < 0) {
+        if (n <= 0) {
             throw new IllegalArgumentException();
         }
 
         this.size = n;
         top =  n * n;
-        bottom = n * n + 1;
-        uf = new WeightedQuickUnionUF(n * n + 2);
-        opens = new boolean[n * n + 2];
+        uf = new WeightedQuickUnionUF(n * n + 1);
+        opens = new boolean[n * n + 1];
         opens[top] = true;
-        opens[bottom] = true;
     }
 
     public void open(int row, int col) {
@@ -34,7 +31,7 @@ public class Percolation {
         }
 
         int topNeighborIndex;
-        int bottomNeighborIndex;
+        int bottomNeighborIndex = i;
         int rightNeighborIndex = i;
         int leftNeighborIndex = i;
 
@@ -43,9 +40,8 @@ public class Percolation {
         } else {
             topNeighborIndex = convertRowColToIndex(row - 1, col);
         }
-        if (row == size) {
-            bottomNeighborIndex = bottom;
-        } else {
+
+        if (row < size) {
             bottomNeighborIndex = convertRowColToIndex(row + 1, col);
         }
 
@@ -67,7 +63,7 @@ public class Percolation {
     public boolean isOpen(int row, int col) {
         checkParameters(row, col);
         int i = convertRowColToIndex(row, col);
-        return uf.connected(i, top);
+        return opens[i];
     }
 
     public boolean isFull(int row, int col) {
@@ -81,7 +77,12 @@ public class Percolation {
     }
 
     public boolean percolates() {
-        return uf.connected(top, bottom);
+        for (int i = size * (size - 1); i < size * size; i++) {
+            if (uf.connected(i, top)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void checkParameters(int row, int col) {
