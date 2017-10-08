@@ -28,6 +28,8 @@ public class Percolation {
         if (!opens[i]) {
             opens[i] = true;
             openCount++;
+        } else {
+            return;
         }
 
         int topNeighborIndex;
@@ -78,7 +80,7 @@ public class Percolation {
 
     public boolean percolates() {
         for (int i = size * (size - 1); i < size * size; i++) {
-            if (uf.connected(i, top)) {
+            if (opens[i] && uf.connected(i, top)) {
                 return true;
             }
         }

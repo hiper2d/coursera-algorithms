@@ -7,7 +7,14 @@ public class PercolationStats {
     private final double[] results;
     private final int t;
 
+    private double cachedMean;
+    private double cachedStddev;
+
     public PercolationStats(int n, int trials) {
+        if (n <= 0 || trials <= 0) {
+            throw new IllegalArgumentException();
+        }
+
         Percolation p;
         results = new double[trials];
         t = trials;
@@ -29,11 +36,17 @@ public class PercolationStats {
     }
 
     public double mean() {
-        return StdStats.mean(results);
+        if (cachedMean == 0) {
+            cachedMean = StdStats.mean(results);
+        }
+        return cachedMean;
     }
 
     public double stddev() {
-        return StdStats.stddev(results);
+        if (cachedStddev == 0D) {
+            cachedStddev = StdStats.stddev(results);
+        }
+        return cachedStddev;
     }
 
     public double confidenceLo() {
@@ -48,7 +61,7 @@ public class PercolationStats {
         if (args.length >= 2) {
             int n = Integer.parseInt(args[0]);
             int t = Integer.parseInt(args[1]);
-            new PercolationStats(n, t);
+            PercolationStats percolationStats = new PercolationStats(n, t);
         }
     }
 }
