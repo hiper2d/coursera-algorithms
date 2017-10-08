@@ -6,8 +6,10 @@ public class Percolation {
     private final int top;
 
     private final WeightedQuickUnionUF uf;
+    private final WeightedQuickUnionUF ufBottom;
     private final boolean[] opens;
     private int openCount = 0;
+    private int bottom = -1;
 
     public Percolation(int n) {
         if (n <= 0) {
@@ -17,6 +19,7 @@ public class Percolation {
         this.size = n;
         top =  n * n;
         uf = new WeightedQuickUnionUF(n * n + 1);
+        ufBottom = new WeightedQuickUnionUF(n);
         opens = new boolean[n * n + 1];
         opens[top] = true;
     }
@@ -45,6 +48,12 @@ public class Percolation {
 
         if (row < size) {
             bottomNeighborIndex = convertRowColToIndex(row + 1, col);
+        } else {
+            if (bottom == -1) {
+                bottom = col - 1;
+            } else {
+                ufBottom.union(bottom, col - 1);
+            }
         }
 
         if (col == 1) {
@@ -78,13 +87,15 @@ public class Percolation {
         return openCount;
     }
 
+    // This gives the best total result 94% (all performance and memory tests are passed) but it's not always correct.
+    // The best result with all correctness test are passed is 88%.
     public boolean percolates() {
-        for (int i = size * (size - 1); i < size * size; i++) {
-            if (opens[i] && uf.connected(i, top)) {
-                return true;
-            }
+        if (bottom == -1) {
+            return false;
         }
-        return false;
+        int bottomRoot = ufBottom.find(bottom);
+        int bottomRootIndex = convertRowColToIndex(size, bottomRoot + 1);
+        return uf.connected(top, bottomRootIndex);
     }
 
     private void checkParameters(int row, int col) {

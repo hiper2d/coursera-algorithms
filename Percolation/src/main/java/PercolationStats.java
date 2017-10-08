@@ -1,3 +1,4 @@
+import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
@@ -62,6 +63,10 @@ public class PercolationStats {
             int n = Integer.parseInt(args[0]);
             int t = Integer.parseInt(args[1]);
             PercolationStats percolationStats = new PercolationStats(n, t);
+            StdOut.println("mean                    = " + percolationStats.mean());
+            StdOut.println("mean                    = " + percolationStats.stddev());
+            StdOut.println("95% confidence interval = [" + percolationStats.confidenceLo() + ", "
+                    + percolationStats.confidenceHi() + "]");
         }
     }
 }

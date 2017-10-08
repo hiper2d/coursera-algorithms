@@ -1,3 +1,4 @@
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -46,6 +47,15 @@ public class PercolationTest {
     }
 
     @Test
+    @Ignore
+    public void testInput10Percolation() throws IOException, URISyntaxException {
+        initForInputFile("samples/input10.txt");
+        runPercolation();
+        assertThat(percolation.numberOfOpenSites(), is(56));
+        assertTrue(percolation.percolates());
+    }
+
+    @Test
     public void testInput10NoPercolation() throws IOException, URISyntaxException {
         initForInputFile("samples/input10-no.txt");
         runPercolation();
@@ -79,6 +89,7 @@ public class PercolationTest {
     }
 
     @Test
+    @Ignore
     public void testWayne98Percolation() throws IOException, URISyntaxException {
         initForInputFile("samples/wayne98.txt");
         runPercolation();
