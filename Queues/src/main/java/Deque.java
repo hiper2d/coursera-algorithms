@@ -21,7 +21,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return size == new Integer(0);
     }
 
     public int size() {

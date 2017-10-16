@@ -1,4 +1,3 @@
-import org.hamcrest.core.Is;
 import org.junit.Test;
 
 
