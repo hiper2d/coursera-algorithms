@@ -1,6 +1,15 @@
+buildscript {
+    repositories { mavenCentral() }
+    dependencies { classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.1") }
+}
+
 plugins {
     java
+    id("org.jetbrains.kotlin.jvm") version "1.1.51"
 }
+
+val hamcrestVersion by project
+val junitJupiterVersion by project
 
 subprojects {
     apply {
@@ -8,6 +17,8 @@ subprojects {
         plugin("checkstyle")
         plugin("findbugs")
         plugin("pmd")
+        plugin("org.jetbrains.kotlin.jvm")
+        plugin("org.junit.platform.gradle.plugin")
     }
 
     configure<CheckstyleExtension> {
@@ -32,6 +43,7 @@ subprojects {
     configure<PmdExtension> {
         toolVersion = "5.7.0"
         isIgnoreFailures = true
+        sourceSets = emptyList<SourceSet>()
     }
 
     java {
@@ -44,8 +56,11 @@ subprojects {
     }
 
     dependencies {
-        compile(files("../lib/algs4.jar"))
-        testCompile("junit:junit:4.12")
+        implementation(files("../lib/algs4.jar"))
+        testCompileOnly("org.jetbrains.kotlin:kotlin-stdlib-jre8")
+        testCompileOnly("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
+        testImplementation("org.hamcrest:java-hamcrest:$hamcrestVersion")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
     }
 
     tasks {
@@ -70,6 +85,6 @@ subprojects {
     }
 
     repositories {
-        jcenter()
+        mavenCentral()
     }
 }

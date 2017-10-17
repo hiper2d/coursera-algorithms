@@ -1,15 +1,15 @@
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DequeTest {
     Deque<String> deque;
 
-    @Before
+    @BeforeEach
     public void setup() {
         deque = new Deque<>();
     }
@@ -42,9 +42,9 @@ public class DequeTest {
         assertEquals("Hey", deque.removeFirst());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void addFirstNull() throws Exception {
-        deque.addFirst(null);
+        assertThrows(IllegalArgumentException.class, () -> deque.addFirst(null));
     }
 
     @Test
@@ -55,20 +55,15 @@ public class DequeTest {
         assertEquals("Hey", deque.removeLast());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void addLastNull() throws Exception {
-        deque.addLast(null);
+        assertThrows(IllegalArgumentException.class, () -> deque.addLast(null));
     }
 
-    @Test(expected = NoSuchElementException.class)
-    public void removeFirstFromEmpty() throws Exception {
-        deque.removeFirst();
-        deque.removeLast();
-    }
-
-    @Test(expected = NoSuchElementException.class)
-    public void removeLastFromEmpty() throws Exception {
-        deque.removeLast();
+    @Test
+    public void removeFirstAndLastFromEmpty() throws Exception {
+        assertThrows(NoSuchElementException.class, () -> deque.removeFirst());
+        assertThrows(NoSuchElementException.class, () -> deque.removeLast());
     }
 
     @Test
@@ -86,11 +81,11 @@ public class DequeTest {
         assertFalse(iterator.hasNext());
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void removeOnIteratorShouldThrowException() {
         deque.addFirst("A");
         Iterator iterator = deque.iterator();
-        iterator.remove();
+        assertThrows(UnsupportedOperationException.class, iterator::remove);
     }
 
     @Test

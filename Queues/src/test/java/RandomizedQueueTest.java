@@ -1,18 +1,18 @@
 import org.hamcrest.core.AnyOf;
-import org.hamcrest.core.Is;
 import org.hamcrest.core.IsEqual;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RandomizedQueueTest {
     RandomizedQueue<String> queue;
 
-    @Before
+    @BeforeEach
     public void setup() {
         queue = new RandomizedQueue<>();
     }
@@ -55,26 +55,26 @@ public class RandomizedQueueTest {
     public void iterator() throws Exception {
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void enqueueNull() {
-        queue.enqueue(null);
+        assertThrows(IllegalArgumentException.class, () -> queue.enqueue(null) );
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void dequeueFromEmpty() {
-        queue.dequeue();
+        assertThrows(NoSuchElementException.class, queue::dequeue );
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void sampleFromEmpty() {
-        queue.sample();
+        assertThrows(NoSuchElementException.class, queue::sample );
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test
     public void removeOnIteratorShouldThrowException() {
         queue.enqueue("A");
         Iterator iterator = queue.iterator();
-        iterator.remove();
+        assertThrows(UnsupportedOperationException.class, iterator::remove);
     }
 
     @Test
