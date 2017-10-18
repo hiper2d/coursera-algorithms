@@ -57,8 +57,8 @@ subprojects {
 
     dependencies {
         implementation(files("../lib/algs4.jar"))
-        testCompileOnly("org.jetbrains.kotlin:kotlin-stdlib-jre8")
         testCompileOnly("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
+        testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jre8")
         testImplementation("org.hamcrest:java-hamcrest:$hamcrestVersion")
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
     }
