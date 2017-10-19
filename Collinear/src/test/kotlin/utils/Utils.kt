@@ -3,13 +3,13 @@ package utils
 import edu.princeton.cs.algs4.StdDraw
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.Scanner
 import java.util.regex.Pattern
 
 import Point
 import BruteCollinearPoints
 import FastCollinearPoints
 import edu.princeton.cs.algs4.StdOut
+import java.util.*
 
 private val WHITESPACE_PATTERN = Pattern.compile("\\p{javaWhitespace}+")
 
@@ -19,6 +19,25 @@ class Utils {
         val scanner = Scanner(Files.newBufferedReader(path))
         scanner.useDelimiter(WHITESPACE_PATTERN)
         return scanner
+    }
+}
+
+fun <T: Comparable<T>> exch(a: Array<T>, i: Int, j: Int) {
+    val temp = a[i]
+    a[i] = a[j]
+    a[j] = temp
+}
+
+
+fun <T: Comparable<T>> less(a: Array<T>, i: Int, j: Int) = a[i] < a[j]
+
+fun <T: Comparable<T>> shuffle(a: Array<T>) {
+    val rand = Random()
+    for (i in 0..a.lastIndex) {
+        val exchIndex = rand.nextInt(i + 1)
+        if (i != exchIndex) {
+            exch(a, i, exchIndex)
+        }
     }
 }
 
