@@ -1,1 +1,1 @@
-include 'Percolation', 'Queues', 'Collinear'
+include 'Percolation', 'Queues', 'Collinear', '8puzzle'
