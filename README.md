@@ -1,4 +1,4 @@
-Coursera algorithms homework
+Coursera Algorithms course homework
 =============
 
 [![TravisCI Build](https://travis-ci.org/hiper2d/spring-kotlin-angular-demo.svg)](https://travis-ci.org/hiper2d/coursera-algorithms)
@@ -20,3 +20,10 @@ Coursera algorithms homework
 gradle module_name:zip
 # Analyze specific module with Stylecheck, Findbugs and PMD
 gradle module_name:analyze
+```
+### Specifications
+##### Part 1
+* Week 1: [Percolation](http://coursera.cs.princeton.edu/algs4/assignments/percolation.html)
+* Week 2: [Queues](http://coursera.cs.princeton.edu/algs4/assignments/queues.html)
+* Week 3: [Collinear](http://coursera.cs.princeton.edu/algs4/assignments/collinear.html)
+* Week 4: [8puzzle](http://coursera.cs.princeton.edu/algs4/assignments/8puzzle.html)
