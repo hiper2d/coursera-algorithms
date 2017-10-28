@@ -1,4 +1,3 @@
-import edu.princeton.cs.algs4.In
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -47,20 +46,30 @@ class BoardTest {
     }
 
     @Test
+    fun equalsCorrectness() {
+        assertFalse(puzzle04Board == null)
+        assertFalse(puzzle04Board == puzzle00Board)
+        assertTrue(
+                Board(arrayOf(intArrayOf(1, 2), intArrayOf(3, 4), intArrayOf(5, 6))) ==
+                        Board(arrayOf(intArrayOf(1, 2), intArrayOf(3, 4), intArrayOf(5, 6)))
+
+        )
+    }
+
+    @Test
     fun testNeighbors() {
         assertEquals(2, puzzle01Board.neighbors().count())
         assertEquals(4, custom03Board.neighbors().count())
     }
 
-    private fun readBoard(filename: String): Board {
-        val reader = In(filename)
-        val n = reader.readInt()
-        val blocks = Array(n) { IntArray(n) }
-        (0 until n).forEach { i ->
-            (0 until n).forEach { j ->
-                blocks[i][j] = reader.readInt()
-            }
-        }
-        return Board(blocks)
+    @Test
+    fun toStringFoematCorrectness() {
+        val b = readBoard("puzzle06.txt")
+        val res = "4\n" +
+                " 0  1  2  3 \n" +
+                " 5  6  7  4 \n" +
+                " 9 10 11  8 \n" +
+                "13 14 15 12 \n"
+        assertEquals(b.toString(), res)
     }
 }

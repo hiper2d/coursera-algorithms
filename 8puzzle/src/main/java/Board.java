@@ -8,9 +8,9 @@ public class Board {
     private int hamming;
     private int manhattan;
 
-    public Board(int[][] blocks) {
-        this.blocks = blocks;
-        n = blocks.length;
+    public Board(final int[][] initial) {
+        n = initial.length;
+        blocks = copy(initial);
         calculateHammingAndManhattan();
     }
 
@@ -43,8 +43,9 @@ public class Board {
                         iTemp = i;
                         jTemp = j;
                         count++;
-                    } else if (count++ == 1) {
+                    } else if (count == 1) {
                         exch(copyBlocks, iTemp, jTemp, i, j);
+                        count++;
                     }
                 }
             }
@@ -53,12 +54,15 @@ public class Board {
     }
 
     public boolean equals(Object y) {
-        if (!(y instanceof Board)) {
+        if (y == null || !y.getClass().equals(this.getClass())) {
             return false;
         }
         Board other = (Board) y;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+        if (blocks.length != other.blocks.length) {
+            return false;
+        }
+        for (int i = 0; i < blocks.length; i++) {
+            for (int j = 0; j < blocks[i].length; j++) {
                 if (blocks[i][j] != other.blocks[i][j]) {
                     return false;
                 }
@@ -81,22 +85,22 @@ public class Board {
         List<Board> neighbors = new ArrayList<>();
         int[][] copy;
         if (i0 != n - 1) {
-            copy = copy();
+            copy = copy(blocks);
             exch(copy, i0, j0, i0 + 1, j0);
             neighbors.add(new Board(copy));
         }
         if (i0 != 0) {
-            copy = copy();
+            copy = copy(blocks);
             exch(copy, i0, j0, i0 - 1, j0);
             neighbors.add(new Board(copy));
         }
         if (j0 != n - 1) {
-            copy = copy();
+            copy = copy(blocks);
             exch(copy, i0, j0, i0, j0 + 1);
             neighbors.add(new Board(copy));
         }
         if (j0 != 0) {
-            copy = copy();
+            copy = copy(blocks);
             exch(copy, i0, j0, i0, j0 - 1);
             neighbors.add(new Board(copy));
         }
@@ -104,12 +108,12 @@ public class Board {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder().append(n);
+        StringBuilder sb = new StringBuilder().append(n).append("\n");
         for (int i = 0; i < n; i++) {
-            sb.append("\n");
             for (int j = 0; j < n; j++) {
-                sb.append(String.format("%2d", blocks[i][j]));
+                sb.append(String.format("%2d ", blocks[i][j]));
             }
+            sb.append("\n");
         }
         return sb.toString();
     }
@@ -134,19 +138,19 @@ public class Board {
         }
     }
 
-    private int[][] copy() {
+    private int[][] copy(int[][] source) {
         int[][] copyBlocks = new int[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                copyBlocks[i][j] = blocks[i][j];
+        for (int i = 0; i < source.length; i++) {
+            for (int j = 0; j < source[i].length; j++) {
+                copyBlocks[i][j] = source[i][j];
             }
         }
         return copyBlocks;
     }
 
-    private void exch(int[][] blocks, int i0, int j0, int i1, int j1) {
-        int temp = blocks[i0][j0];
-        blocks[i0][j0] = blocks[i1][j1];
-        blocks[i1][j1] = temp;
+    private void exch(int[][] source, int i0, int j0, int i1, int j1) {
+        int temp = source[i0][j0];
+        source[i0][j0] = source[i1][j1];
+        source[i1][j1] = temp;
     }
 }
