@@ -1,5 +1,5 @@
 buildscript {
-    val kotlinVersion = "1.2.0-beta-88"
+    val kotlinVersion = "1.2.0-rc-39"
 
     repositories {
         mavenCentral()
@@ -41,7 +41,6 @@ subprojects {
         plugin("findbugs")
         plugin("pmd")
         plugin("org.junit.platform.gradle.plugin")
-        // plugin("org.jetbrains.kotlin.jvm")
     }
 
     configure<CheckstyleExtension> {
