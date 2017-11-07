@@ -27,7 +27,7 @@ public class KdTree {
         root = insert(root, p, 0, zone);
     }
 
-    private Node insert(Node currentRoot, Point2D p, int level, RectHV currentZone) {
+    private Node insert(final Node currentRoot, Point2D p, int level, RectHV currentZone) {
         boolean isEvenLevel = level % 2 == 0;
         if (currentRoot == null) {
             size++;
@@ -44,24 +44,26 @@ public class KdTree {
         if (isEvenLevel) {
             compare = Double.compare(p.x(), currentRoot.value.x());
             switch (compare) {
-                case -1:
+                case 1:
+                    zone = new RectHV(currentRoot.value.x(), currentZone.ymin(), currentZone.xmax(), currentZone.ymax());
+                    currentRoot.right = insert(currentRoot.right, p, level + 1, zone);
+                    break;
+                default:
                     zone = new RectHV(currentZone.xmin(), currentZone.ymin(), currentRoot.value.x(), currentZone.ymax());
                     currentRoot.left = insert(currentRoot.left, p, level + 1, zone);
                     break;
-                default:
-                    zone = new RectHV(currentRoot.value.x(), currentZone.ymin(), currentZone.xmax(), currentZone.ymax());
-                    currentRoot.right = insert(currentRoot.right, p, level + 1, zone);
             }
         } else {
             compare = Double.compare(p.y(), currentRoot.value.y());
             switch (compare) {
-                case -1:
+                case 1:
+                    zone = new RectHV(currentZone.xmin(), currentRoot.value.y(), currentZone.xmax(), currentZone.ymax());
+                    currentRoot.right = insert(currentRoot.right, p, level + 1, zone);
+                    break;
+                default:
                     zone = new RectHV(currentZone.xmin(), currentZone.ymin(), currentZone.xmax(), currentRoot.value.y());
                     currentRoot.left = insert(currentRoot.left, p, level + 1, zone);
                     break;
-                default:
-                    zone = new RectHV(currentZone.xmin(), currentRoot.value.y(), currentZone.xmax(), currentZone.ymax());
-                    currentRoot.right = insert(currentRoot.right, p, level + 1, zone);
             }
         }
         return currentRoot;
@@ -125,6 +127,8 @@ public class KdTree {
         if (current.rect.intersects(rect)) {
             range(current.left, rect, points);
             range(current.right, rect, points);
+        } else {
+            return;
         }
         if (rect.contains(current.value)) {
             points.add(current.value);
@@ -145,17 +149,20 @@ public class KdTree {
         }
 
         if (!current.rect.contains(p)) {
-            double axisDist;
-            if (current.isEvenLevel) {
-                axisDist = new Point2D(current.value.x(), p.y()).distanceSquaredTo(p);
-                if (axisDist > best.distanceSquaredTo(p)) {
-                    return best;
-                }
-            } else {
-                axisDist = new Point2D(p.x(), current.value.y()).distanceSquaredTo(p);
-                if (axisDist > best.distanceSquaredTo(p)) {
-                    return best;
-                }
+            double xAxisDist = Math.min(
+                    new Point2D(p.x(), current.rect.ymin()).distanceSquaredTo(p),
+                    new Point2D(p.x(), current.rect.ymax()).distanceSquaredTo(p)
+            );
+
+            double yAxisDist = Math.min(
+                    new Point2D(current.rect.xmin(), p.y()).distanceSquaredTo(p),
+                    new Point2D(current.rect.xmax(), p.y()).distanceSquaredTo(p)
+            );
+
+            double realDistance = best.distanceSquaredTo(p);
+
+            if (yAxisDist > realDistance && xAxisDist > realDistance) {
+                return best;
             }
         }
 
