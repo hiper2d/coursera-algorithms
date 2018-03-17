@@ -1,28 +1,15 @@
 buildscript {
-    val kotlinVersion = "1.2.0-beta-88"
-
     repositories {
         mavenCentral()
-        maven(url = "http://dl.bintray.com/kotlin/kotlin-eap-1.2")
     }
     dependencies {
         classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.1")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }
 }
 
 plugins {
     java
-    /*
-        We use beta version of Kotlin 1.2 from a specific repo.
-        This is the reason why we need the 'kotlin-gradle-plugin' in a buildScript section.
-        To switch back to a stable Kotlin 1.1 we need:
-            - remove the "http://dl.bintray.com/kotlin/kotlin-eap-1.2" repo;
-            - remove the 'kotlin-gradle-plugin' plugin from the buildScript;
-            - replace the 'kotlin' plugin with the the 'org.jetbrains.kotlin.jvm' in the apply section;
-            - uncomment the line bellow.
-    */
-    // id("org.jetbrains.kotlin.jvm") version "1.1.51"
+    kotlin("jvm") version "1.2.30" apply false
 }
 
 val hamcrestVersion by project
@@ -31,17 +18,15 @@ val junitJupiterVersion by project
 subprojects {
     repositories {
         mavenCentral()
-        maven(url = "http://dl.bintray.com/kotlin/kotlin-eap-1.2")
     }
 
     apply {
         plugin("java")
-        plugin("kotlin")
         plugin("checkstyle")
         plugin("findbugs")
         plugin("pmd")
         plugin("org.junit.platform.gradle.plugin")
-        // plugin("org.jetbrains.kotlin.jvm")
+        plugin("org.jetbrains.kotlin.jvm")
     }
 
     configure<CheckstyleExtension> {
