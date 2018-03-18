@@ -27,4 +27,6 @@ gradle module_name:analyze
 * Week 2: [Queues](http://coursera.cs.princeton.edu/algs4/assignments/queues.html), [checklist](http://coursera.cs.princeton.edu/algs4/checklists/queues.html)
 * Week 3: [Collinear](http://coursera.cs.princeton.edu/algs4/assignments/collinear.html), [checklist](http://coursera.cs.princeton.edu/algs4/checklists/collinear.html)
 * Week 4: [8puzzle](http://coursera.cs.princeton.edu/algs4/assignments/8puzzle.html), [checklist](http://coursera.cs.princeton.edu/algs4/checklists/8puzzle.html)
-* Week 5: [kdtree](http://coursera.cs.princeton.edu/algs4/assignments/kdtree.html), [checklist](http://coursera.cs.princeton.edu/algs4/checklists/kdtree.html)
+* Week 5: [KdTree](http://coursera.cs.princeton.edu/algs4/assignments/kdtree.html), [checklist](http://coursera.cs.princeton.edu/algs4/checklists/kdtree.html)
+##### Part 2
+* Week 5: [WordNet](http://coursera.cs.princeton.edu/algs4/assignments/wordnet.html), [checklist](http://coursera.cs.princeton.edu/algs4/checklists/wordnet.html)

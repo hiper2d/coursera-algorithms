@@ -1,1 +1,3 @@
-include 'Percolation', 'Queues', 'Collinear', '8puzzle', 'KdTree', 'WordNet'
+rootProject.name = "coursera-algorithms"
+
+include "Percolation", "Queues", "Collinear", "8puzzle", "KdTree", "WordNet"
