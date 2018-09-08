@@ -1,23 +1,14 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.1")
-    }
-}
-
 plugins {
     java
-    kotlin("jvm") version "1.2.30" apply false
+    kotlin("jvm") version "1.2.61" apply false
 }
 
-val hamcrestVersion by project
-val junitJupiterVersion by project
+val hamcrestVersion: String by project
+val junitJupiterVersion: String by project
 
 subprojects {
     repositories {
-        mavenCentral()
+        jcenter()
     }
 
     apply {
@@ -25,7 +16,6 @@ subprojects {
         plugin("checkstyle")
         plugin("findbugs")
         plugin("pmd")
-        plugin("org.junit.platform.gradle.plugin")
         plugin("org.jetbrains.kotlin.jvm")
     }
 
@@ -65,22 +55,25 @@ subprojects {
 
     dependencies {
         implementation(files("../lib/algs4.jar"))
-        testCompileOnly("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
         testImplementation("org.jetbrains.kotlin:kotlin-stdlib-jre8")
         testImplementation("org.hamcrest:java-hamcrest:$hamcrestVersion")
+        testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
     }
 
     tasks {
-        "zip"(type = Zip::class) {
+        create<Zip>("zip") {
             baseName = project.name.toLowerCase()
-            dependsOn("build") // todo: figure out why it's not working
             from("src/main/java")
             include("*")
         }
 
-        "analyze" {
+        create("analyze") {
             dependsOn("checkstyleMain", "findbugsMain", "pmdMain")
+        }
+
+        withType<Test> {
+            useJUnitPlatform()
         }
 
         withType<FindBugs> {

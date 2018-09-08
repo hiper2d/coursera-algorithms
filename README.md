@@ -4,9 +4,9 @@ Coursera Algorithms course homework
 [![TravisCI Build](https://travis-ci.org/hiper2d/spring-kotlin-angular-demo.svg)](https://travis-ci.org/hiper2d/coursera-algorithms)
 
 ### Technology stack
-* Gradle 4
+* Gradle 4.10
 * jUnit 5
-* Kotlin 1.2 beta in tests
+* Kotlin 1.2.61 in tests
 
 ### Highlights
 * Each homework is in separate Gradle module
